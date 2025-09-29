@@ -33,9 +33,8 @@
             background-color: #e9ecef;
         }
         .nav-link.active {
-            color: #fff2e1;
-            background-color: #e7f1ff;
             font-weight: 600;
+            background-color: black;
         }
         .nav-link .bi {
             margin-right: 0.75rem;
@@ -66,7 +65,7 @@
         </div>
         
         <div class="p-3">
-             <div class="p-2 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3 text-center fw-semibold">
+             <div class="p-2 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3 text-center fw-semibold">
                 Especialista TI
             </div>
         </div>
@@ -74,10 +73,30 @@
         <nav class="nav nav-pills flex-column p-3">
             <span class="px-3 pt-4 pb-2 text-muted small text-uppercase fw-bold">Gestión Principal</span>
             <ul class="nav flex-column">
-                <li class="nav-item"><a href="#" class="nav-link active"><i class="bi bi-person-video3"></i>Crear Usuario</a></li>
-                <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-file-earmark-text"></i> Requerimiento Personal</a></li>
-                <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-journal-check"></i> Gestionar Responsivas</a></li>
-                <li class="nav-item"><a href="#" class="nav-link"><i class="bi bi-calendar-check"></i> Gestionar Pases de Salida</a></li>
+                <li class="nav-item">
+                    <a href="{{ route('panelti.crearUsuario') }}" class="nav-link {{ request()->routeIs('panelti.crearUsuario') ? 'active' : '' }}">
+                        <i class="bi bi-person-video3"></i>
+                        Crear Usuario
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('panelti.administrarResponsivas') }}" class="nav-link {{ request()->routeIs('panelti.administrarResponsivas') ? 'active' : '' }}">
+                        <i class="bi bi-file-earmark-text"></i>
+                        Requerimiento Personal
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('panelti.administrarResponsivas') }}" class="nav-link {{ request()->routeIs('panelti.administrarResponsivas') ? 'active' : '' }}">
+                        <i class="bi bi-journal-check"></i>
+                        Gestionar Responsivas
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('panelti.pasesSalida') }}" class="nav-link {{ request()->routeIs('panelti.pasesSalida') ? 'active' : '' }}">
+                        <i class="bi bi-calendar-check"></i>
+                        Gestionar Pases de Salida
+                    </a>
+                </li>
             </ul>
         </nav>
         
@@ -96,7 +115,7 @@
     <main class="main-content p-4">
         <header class="d-flex justify-content-between align-items-center pb-3 mb-4 border-bottom">
             <div>
-                <h1 class="h3 fw-bold">Gestión de Empleados</h1>
+                <h1 class="h3 fw-bold">Crear cuentas de Usuario</h1>
                 <p class="mb-0 text-muted">Administra la información de todos los empleados</p>
             </div>
             <button class="btn btn-primary">

@@ -23,8 +23,6 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('panelti.index');
             } elseif ($user->role === 'rh') {
                 return redirect()->route('panelrh.index');
-            } elseif ($user->role === 'empleado') {
-                return redirect()->route('panelempleados.index');
             }
         }
 

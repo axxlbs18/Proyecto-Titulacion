@@ -116,48 +116,13 @@
         <header class="d-flex justify-content-between align-items-center pb-3 mb-4 border-bottom">
             <div>
                 <h1 class="h3 fw-bold">Crear cuentas de Usuario</h1>
-                <p class="mb-0 text-muted">Administra la información de todos los empleados</p>
+                <p class="mb-0 text-muted">Administra la información de las cuentas de usuario.</p>
             </div>
             <button class="btn btn-primary">
                 <i class="bi bi-plus-lg me-1"></i>
                 Nuevo Empleado
             </button>
         </header>
-
-        <section class="row g-4 mb-4">
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">Total Empleados</h6>
-                        <p class="card-text fs-2 fw-semibold">10</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">Empleados Activos</h6>
-                        <p class="card-text fs-2 fw-semibold">9</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">Responsivas Activas</h6>
-                        <p class="card-text fs-2 fw-semibold">12</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">Equipos Asignados</h6>
-                        <p class="card-text fs-2 fw-semibold">25</p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <div class="card mb-4">
             <div class="card-body">
@@ -193,93 +158,60 @@
         </div>
 
         <div class="vstack gap-3">
-            {{-- Aquí es donde harías un bucle con tus datos, por ejemplo: @foreach($employees as $employee) --}}
-
+            {{-- Formulario para crear cuentas de usuario (reemplaza las cards de ejemplo) --}}
             <div class="card">
-                <div class="card-body p-3">
-                    <div class="row g-3 align-items-center">
-                        <div class="col-auto">
-                           <div class="p-3 bg-light rounded-circle"><i class="bi bi-person fs-2 text-primary"></i></div>
-                        </div>
-                        <div class="col-lg">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <small class="text-muted"><strong>EMP-001</strong></small>
-                                    <span class="badge rounded-pill text-bg-success ms-1 status-badge">Activo</span>
-                                    <h6 class="mb-0 fw-bold">Juan Pérez García</h6>
-                                    <small class="text-muted">Desarrollador Senior</small>
-                                </div>
-                                <div class="col-lg-2">
-                                    <small class="text-muted">Departamento</small>
-                                    <p class="mb-0">Tecnología</p>
-                                </div>
-                                <div class="col-lg-3">
-                                    <small class="text-muted">Contacto</small>
-                                    <p class="mb-0 small">229-123-4567 / juan.perez@miempu.com</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <small class="text-muted">Laboral</small>
-                                    <p class="mb-0 small">Ingreso: 2023-01-15</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <small class="text-muted">Asignaciones</small>
-                                    <p class="mb-0 small">2 responsivas</p>
-                                </div>
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-3">Registrar nuevo usuario</h5>
+
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <x-input-label for="name" :value="__('Name')" />
+                                <x-text-input id="name" class="block mt-1 w-full form-control" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                                <x-input-error :messages="$errors->get('name')" class="mt-2 text-danger" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <x-input-label for="email" :value="__('Email')" />
+                                <x-text-input id="email" class="block mt-1 w-full form-control" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                                <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <x-input-label for="password" :value="__('Password')" />
+                                <x-text-input id="password" class="block mt-1 w-full form-control" type="password" name="password" required autocomplete="new-password" />
+                                <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                                <x-text-input id="password_confirmation" class="block mt-1 w-full form-control" type="password" name="password_confirmation" required autocomplete="new-password" />
+                                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-danger" />
+                            </div>
+
+                            <div class="col-12">
+                                <x-input-label for="role" :value="__('Rol')" />
+                                <select id="role" name="role" class="form-select">
+                                    <option value="">-- Selecciona un rol --</option>
+                                    <option value="ti" {{ old('role') == 'ti' ? 'selected' : '' }}>TI</option>
+                                    <option value="rh" {{ old('role') == 'rh' ? 'selected' : '' }}>RH</option>
+                                    <option value="empleado" {{ old('role') == 'empleado' ? 'selected' : '' }}>Empleado</option>
+                                </select>
+                                <x-input-error :messages="$errors->get('role')" class="mt-2 text-danger" />
+                            </div>
+
+                            <div class="col-12 d-flex justify-content-end align-items-center">
+                                <a class="me-3 text-decoration-underline text-muted" href="{{ route('login') }}">{{ __('Already registered?') }}</a>
+                                <x-primary-button class="btn btn-primary">
+                                    {{ __('Register') }}
+                                </x-primary-button>
                             </div>
                         </div>
-                        <div class="col-lg-auto">
-                            <div class="d-grid d-lg-flex gap-2">
-                                <button class="btn btn-sm btn-outline-secondary">Ver</button>
-                                <button class="btn btn-sm btn-primary">Editar</button>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-
-            <div class="card">
-                <div class="card-body p-3">
-                    <div class="row g-3 align-items-center">
-                        <div class="col-auto">
-                           <div class="p-3 bg-light rounded-circle"><i class="bi bi-person fs-2 text-primary"></i></div>
-                        </div>
-                        <div class="col-lg">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <small class="text-muted"><strong>EMP-002</strong></small>
-                                    <span class="badge rounded-pill text-bg-success ms-1 status-badge">Activo</span>
-                                    <h6 class="mb-0 fw-bold">Maria López Hernandez</h6>
-                                    <small class="text-muted">Contadora</small>
-                                </div>
-                                <div class="col-lg-2">
-                                    <small class="text-muted">Departamento</small>
-                                    <p class="mb-0">Administración</p>
-                                </div>
-                                <div class="col-lg-3">
-                                    <small class="text-muted">Contacto</small>
-                                    <p class="mb-0 small">229-654-3210 / maria.lopez@miempu.com</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <small class="text-muted">Laboral</small>
-                                    <p class="mb-0 small">Ingreso: 2022-03-20</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <small class="text-muted">Asignaciones</small>
-                                    <p class="mb-0 small">1 responsiva</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-auto">
-                             <div class="d-grid d-lg-flex gap-2">
-                                <button class="btn btn-sm btn-outline-secondary">Ver</button>
-                                <button class="btn btn-sm btn-primary">Editar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Aquí terminaría el bucle: @endforeach --}}
         </div>
     </main>
 </div>

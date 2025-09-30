@@ -85,7 +85,7 @@
                     <li class="nav-item">
                         <a href="{{ route('panelti.index') }}"
                             class="nav-link {{ request()->routeIs('panelti.index') ? 'active' : '' }}">
-                            <i class="bi bi-person-video"></i> Usuarios
+                            <i class="bi bi-person-video3"></i> Usuarios
                         </a>
                     </li>
                     <li class="nav-item">
@@ -125,7 +125,7 @@
                     <span class="p-2 bg-danger rounded-3 me-2">
                         <i class="bi bi-person text-white fs-5"></i>
                     </span>
-                    <h1 class="h3 fw-bold mb-0">Gestión de Usuarios</h1>
+                    <h1 class="h3 fw-bold mb-0">Gestión de Requerimientos</h1>
                 </div>
 
             </header>
@@ -135,62 +135,16 @@
             @endif
 
             <div class="card mb-4">
-                <!-- Header -->
                 <div class="card-header d-flex align-items-center" style="background-color: #fee6e6;">
                     <span class="p-2 rounded-3 me-2">
                         <i class="bi bi-people fs-4"></i>
                     </span>
-                    <h5 class="mb-0 fw-bold text-dark">Registrar Nuevo Usuario</h5>
+                    <h5 class="mb-0 fw-bold text-dark">Requerimientos de Personal</h5>
                 </div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('panelti.storeUsuario', ['empleado' => 1]) }}">
-                        @csrf
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="name" class="form-label">Nombre</label>
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}"
-                                    required>
-                                @error('name') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
-                            </div>
-                            <div class="col-md-6">
-                                <label for="email" class="form-label">Email</label>
-                                <input id="email" type="email" class="form-control" name="email"
-                                    value="{{ old('email') }}" required>
-                                @error('email') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
-                            </div>
-                            <div class="col-md-6">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input id="password" type="password" class="form-control" name="password" required>
-                                @error('password') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
-                            </div>
-                            <div class="col-md-6">
-                                <label for="password_confirmation" class="form-label">Confirmar Contraseña</label>
-                                <input id="password_confirmation" type="password" class="form-control"
-                                    name="password_confirmation" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="rol" class="form-label">Rol</label>
-                                <select id="rol" name="rol" class="form-select" required>
-                                    <option value="">-- Selecciona un rol --</option>
-                                    <option value="ti">TI</option>
-                                    <option value="rh">RH</option>
-                                </select>
-                                @error('rol') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
-                            </div>
-                            <div class="col-12 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary">Crear Cuenta</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-
-            {{-- Tabla de usuarios --}}
-            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title fw-semibold mb-3">Usuarios registrados</h5>
+
                     <table class="table table-bordered align-middle">
                         <thead class="table-light">
                             <tr>
@@ -202,39 +156,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($usuarios as $usuario)
-                            <tr>
-                                <td>{{ $usuario->id }}</td>
-                                <td>{{ $usuario->name }}</td>
-                                <td>{{ $usuario->email }}</td>
-                                <td>{{ $usuario->role }}</td>
-                                <td>
-                                    <a href="{{ route('panelti.editarUsuario', $usuario->id) }}"
-                                        class="btn btn-sm btn-warning">
-                                        <i class="bi bi-pencil"></i> Editar
-                                    </a>
-                                    <form action="{{ route('panelti.eliminarUsuario', $usuario->id) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('¿Eliminar usuario?')">
-                                            <i class="bi bi-trash"></i> Eliminar
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                            @if($usuarios->isEmpty())
-                            <tr>
-                                <td colspan="5" class="text-center">No hay usuarios registrados</td>
-                            </tr>
-                            @endif
                         </tbody>
                     </table>
                 </div>
             </div>
+    </div>
 
-        </main>
+    </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

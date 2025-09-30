@@ -33,22 +33,20 @@ class RegisteredUserController extends Controller
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        'role' => ['required', 'in:ti,rh,empleado'], // Validación de rol
+        'role' => ['required', 'in:ti,rh,empleado'],
     ]);
 
-    $user = User::create([
+    User::create([
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
-        'role' => $request->role, // Aquí se guarda el rol seleccionado
+        'role' => $request->role,
     ]);
 
-    event(new Registered($user));
-
-    Auth::login($user);
-
-    return redirect(route('login'));
+    return redirect()->route('panelti.crearUsuario')
+        ->with('success', 'Usuario registrado correctamente.');
 }
+
 
 
 }

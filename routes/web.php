@@ -28,9 +28,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Panel TI
     Route::get('/panelti', [PanelTIController::class, 'index'])->name('panelti.index');
-    Route::get('/panelti/crear-usuario', [PanelTIController::class, 'crearUsuario'])->name('panelti.crearUsuario');
-    Route::post('/panelti/store-usuario/{empleado}', [PanelTIController::class, 'storeUsuario'])->name('panelti.storeUsuario');
-    Route::get('/panelti/administrar-responsivas', [PanelTIController::class, 'administrarResponsivas'])->name('panelti.administrarResponsivas');
+    Route::get('/panelti/crear-usuario', [PanelTIController::class, 'crearUsuario'])
+    ->name('panelti.crearUsuario');
+
+Route::post('/panelti/crear-usuario', [PanelTIController::class, 'storeUsuario'])
+    ->name('panelti.storeUsuario');
+
+
+Route::get('/panelti/{id}/editar', [PanelTIController::class, 'editarUsuario'])
+    ->name('panelti.editarUsuario');
+
+Route::put('/panelti/{id}', [PanelTIController::class, 'actualizarUsuario'])
+    ->name('panelti.actualizarUsuario');
+
+Route::delete('/panelti/{id}', [PanelTIController::class, 'eliminarUsuario'])
+    ->name('panelti.eliminarUsuario');
+    Route::get('/panelti/administrarResponsivas', [PanelTIController::class, 'administrarResponsivas'])->name('panelti.administrarResponsivas');
+    Route::get('/panelti/administrarRequerimientos', [PanelTIController::class, 'administrarRequerimientos'])->name('panelti.administrarRequerimientos');
     Route::post('/panelti/asignar-equipo', [PanelTIController::class, 'asignarEquipo'])->name('panelti.asignarEquipo');
     Route::get('/panelti/generar-responsiva/{id_empleado}', [PanelTIController::class, 'generarResponsiva'])->name('panelti.generarResponsiva');
     Route::get('/panelti/pases-salida', [PanelTIController::class, 'pasesSalida'])->name('panelti.pasesSalida');
@@ -39,11 +53,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/panelrh', function () {
         return view('panelrh.index');
     })->name('panelrh.index');
-
-    // Empleados
-    Route::get('/panelrh/empleados', [EmpleadoController::class, 'index'])->name('panelrh.empleados');
-    Route::get('/panelrh/empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
-    Route::post('/panelrh/empleados/store', [EmpleadoController::class, 'store'])->name('empleados.store');
 
     // Requerimientos/solicitudes
     Route::get('/panelrh/requerimiento/create', [EmpleadoSolicitudController::class, 'create'])->name('empleados.solicitud.create');

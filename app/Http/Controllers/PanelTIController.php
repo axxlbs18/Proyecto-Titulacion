@@ -15,7 +15,8 @@ class PanelTIController extends Controller
     public function index()
     {
         $empleados = Empleado::all(); // Sin relaciones aún
-        return view('panelti.index', compact('empleados'));
+        $usuarios = User::all(); // Para listar usuarios en el panel
+        return view('panelti.index', compact('empleados', 'usuarios'));
     }
 
     /**
@@ -34,18 +35,65 @@ class PanelTIController extends Controller
     {
         $request->validate([
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
-            'rol' => 'required'
+            'password' => 'required|confirmed|min:6',
+            'rol' => 'required|in:ti,rh,empleado'
         ]);
 
         User::create([
-            'name' => $empleado->nombre,
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->rol, // Cambié 'rol' a 'role' para coincidir con tu Auth
+            'role' => $request->rol, // Se guarda el rol
         ]);
 
-        return redirect()->route('panelti.index')->with('success', 'Usuario creado correctamente.');
+        return redirect()->route('panelti.index')->with('success', 'Usuario creado correctamente ✅');
+    }
+
+    /**
+     * Editar usuario
+     */
+    public function editarUsuario($id)
+    {
+        $usuario = User::findOrFail($id);
+        return view('panelti.editar-usuario', compact('usuario'));
+    }
+
+    /**
+     * Actualizar usuario
+     */
+    public function actualizarUsuario(Request $request, $id)
+    {
+        $usuario = User::findOrFail($id);
+
+        $request->validate([
+            'name' => ['required','string','max:255'],
+            'email' => ['required','string','email','max:255','unique:users,email,'.$usuario->id],
+            'password' => ['nullable','confirmed','min:6'],
+            'rol' => ['required','in:ti,rh,empleado'],
+        ]);
+
+        $usuario->name = $request->name;
+        $usuario->email = $request->email;
+        $usuario->role = $request->rol;
+
+        if ($request->filled('password')) {
+            $usuario->password = Hash::make($request->password);
+        }
+
+        $usuario->save();
+
+        return redirect()->route('panelti.index')->with('success','Usuario actualizado correctamente ✨');
+    }
+
+    /**
+     * Eliminar usuario
+     */
+    public function eliminarUsuario($id)
+    {
+        $usuario = User::findOrFail($id);
+        $usuario->delete();
+
+        return redirect()->route('panelti.index')->with('success','Usuario eliminado correctamente 🗑️');
     }
 
     /**
@@ -54,7 +102,7 @@ class PanelTIController extends Controller
      */
     public function administrarResponsivas()
     {
-        return view('panelti.administrar-responsivas'); // Sin requerimientos por ahora
+        return view('panelti.administrarResponsivas'); // Sin requerimientos por ahora
     }
 
     /**
@@ -82,5 +130,10 @@ class PanelTIController extends Controller
     public function pasesSalida()
     {
         return view('panelti.pases-salida'); // vista temporal
+    }
+
+    public function administrarRequerimientos()
+    {
+        return view('panelti.administrarRequerimientos'); // Sin requerimientos por ahora
     }
 }

@@ -143,15 +143,13 @@
                 </div>
 
                 <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-3">Usuarios registrados</h5>
+                    <h5 class="card-title fw-semibold mb-3">Requerimientos Pendientes</h5>
 
                     <table class="table table-bordered align-middle">
                         <thead class="table-light">
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Rol</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>

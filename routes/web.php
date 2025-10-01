@@ -57,12 +57,9 @@ Route::delete('/panelti/{id}', [PanelTIController::class, 'eliminarUsuario'])
     // Requerimientos/solicitudes
     Route::get('/panelrh/requerimiento/create', [EmpleadoSolicitudController::class, 'create'])->name('empleados.solicitud.create');
     Route::post('/panelrh/requerimiento/store', [EmpleadoSolicitudController::class, 'store'])->name('empleados.solicitud.store');
+    // La ruta correcta para que tu formulario guarde
+Route::post('/empleados', [EmpleadoController::class, 'store'])->name('empleados.store');
 
-    // Panel Empleados
-    Route::get('/panelempleados', function () {
-        return view('panelempleados.index');
-    })->name('panelempleados.index');
-});
 
 // 🔹 AJAX
 Route::get('/obtener-inmuebles', [PanelRHController::class, 'obtenerInmuebles']);
@@ -70,3 +67,4 @@ Route::get('/obtener-domicilio', [PanelRHController::class, 'obtenerDomicilio'])
 
 // 🔹 Rutas de autenticación por defecto (login, logout, register, etc.)
 require __DIR__ . '/auth.php';
+});

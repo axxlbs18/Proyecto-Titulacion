@@ -28,9 +28,7 @@ class PanelTIController extends Controller
         return view('panelti.crear-usuario', compact('empleados'));
     }
 
-    /**
-     * Guardar un nuevo usuario asociado a un empleado
-     */
+    
     public function storeUsuario(Request $request, Empleado $empleado)
     {
         $request->validate([
